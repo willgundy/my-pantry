@@ -1,17 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./styles/reset.css">
-        <link rel="stylesheet" href="./styles/style.css">
-        <link rel="stylesheet" href="./styles/home.css">
-        <title>Document</title>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/reset.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/home.css">
+    <title>Document</title>
+</head>
+
 <body>
-    
+    <header>
+        <div class="gutter-right logo">
+        </div>
+    </header>
+    <main>
+        <section id="pantry-container">
+            <h2>My Pantry</h2>
+            <ul id="pantry-list">
+                <li>
+                    Milk 
+                    <span>3
+                        <button>
+                            Use
+                        </button>
+                        <button>
+                            Expired
+                        </button>
+                    </span>
+                </li>
+                <li>
+                    Eggs 
+                    <span>3
+                        <button>
+                            Use
+                        </button>
+                        <button>
+                            Expired
+                        </button>
+                    </span>
+                </li>
+                <li>
+                    cheese 
+                    <span>3
+                        <button>
+                            Use
+                        </button>
+                        <button>
+                            Expired
+                        </button>
+                    </span>
+                </li>
+            </ul>
+        </section>
+        <section id="grocery-container">
+            <h2>Grocery List</h2>
+            <form id="grocery-form">
+                <input list="grocery-item-list" name="grocery-item" id="grocery-item">
+                    <datalist id="grocery-item-list">
+                        
+                    </datalist>
+                <input type="number" name="grocery-count" value="1">
+                <button>Add to List</button>
+            </form>
+            <ul id="grocery-list">
+
+            </ul>
+            <button class="finishShoppingBtn">Finish Shopping</button>
+        </section>
+    </main>
+    <script type="module" src="./shopping-list.js"></script>
 </body>
+
 </html>

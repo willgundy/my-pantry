@@ -57,6 +57,16 @@ export async function getSingleShoppingItem(id) {
     return response.body;
 }
 
+export async function getSingleShoppingItemByName(itemName) {
+    const response = await client 
+        .from('shopping-items')
+        .select('*')
+        .match({ 'item_name': itemName })
+        .single();
+
+    return response.body;
+}
+
 export async function createShoppingItem(item) {
     const response = await client
         .from('shopping-items')
@@ -66,10 +76,20 @@ export async function createShoppingItem(item) {
 }
 
 //grocery items
-export async function getAllGroceryItems() {
+export async function getAllActiveGroceryItems() {
     const response = await client 
         .from('grocery-items')
-        .select('*');
+        .select('*')
+        .neq('status', 'finished');
+
+    return response.body;
+}
+
+export async function getAllCompletedGroceryItems() {
+    const response = await client 
+        .from('grocery-items')
+        .select('*')
+        .match({ 'status': 'complete' });
 
     return response.body;
 }
@@ -102,6 +122,15 @@ export async function updateGroceryItemCount(count, id) {
     return response.body;
 }
 
+export async function deleteGroceryItem(id) {
+    const response = await client 
+        .from('grocery-items')
+        .delete()
+        .match({ id: id })
+        .single();
+
+    return response.body;
+}
 
 //pantry items
 export async function getAllPantryItems() {
@@ -116,7 +145,8 @@ export async function getPantryItemByItemId(item_id) {
     const response = await client 
         .from('pantry-items')
         .select('*')
-        .match({ 'item_id': item_id });
+        .match({ 'item_id': item_id })
+        .single();
 
     return response.body;
 }
@@ -147,3 +177,4 @@ export async function updatePantryItemCount(count, id) {
 
     return response.body;
 }
+
