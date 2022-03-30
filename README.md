@@ -24,3 +24,14 @@ Additional considerations:
     -   What needs to live in a persistence layer?
 -   Is there some state we need to initialize?
 -   Ask: should any of this work be abstracted into functions? (i.e., is the work complicated? can it be resused?)
+
+![wireframe](/assets/wireframe.png)
+
+1. HTML setup
+2. Db setup
+    - grocery items
+    - grocery list
+    - pantry list
+3. Fetch utils
+4. Render utils
+5. Event listeners

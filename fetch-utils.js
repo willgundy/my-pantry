@@ -1,5 +1,6 @@
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJiYnp4bXNrYWdwcm92cWNjcm1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDc1NTM0MzksImV4cCI6MTk2MzEyOTQzOX0.wkKK4FheZyrNrf7B04tLKfQuyVwpMO3ycPvoUWD6S9M';
+
+const SUPABASE_URL = 'https://rbbzxmskagprovqccrmk.supabase.co';
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -15,7 +16,7 @@ export function checkAuth() {
 
 export function redirectIfLoggedIn() {
     if (getUser()) {
-        location.replace('./other-page');
+        location.replace('./shopping-list');
     }
 }
 
@@ -37,6 +38,143 @@ export async function logout() {
     return (window.location.href = '../');
 }
 
-// function checkError({ data, error }) {
-//     return error ? console.error(error) : data;
-// }
+//shopping items
+export async function getAllShoppingItems() {
+    const response = await client 
+        .from('shopping-items')
+        .select('*');
+
+    return response.body;
+}
+
+export async function getSingleShoppingItem(id) {
+    const response = await client 
+        .from('shopping-items')
+        .select('*')
+        .match({ 'id': id })
+        .single();
+
+    return response.body;
+}
+
+export async function getSingleShoppingItemByName(itemName) {
+    const response = await client 
+        .from('shopping-items')
+        .select('*')
+        .match({ 'item_name': itemName })
+        .single();
+
+    return response.body;
+}
+
+export async function createShoppingItem(item) {
+    const response = await client
+        .from('shopping-items')
+        .insert(item);
+    
+    return response.body;
+}
+
+//grocery items
+export async function getAllActiveGroceryItems() {
+    const response = await client 
+        .from('grocery-items')
+        .select('*')
+        .neq('status', 'finished');
+
+    return response.body;
+}
+
+export async function getAllCompletedGroceryItems() {
+    const response = await client 
+        .from('grocery-items')
+        .select('*')
+        .match({ 'status': 'complete' });
+
+    return response.body;
+}
+
+export async function createGroceryItem(item) {
+    const response = await client
+        .from('grocery-items')
+        .insert(item);
+    
+    return response.body;
+}
+
+export async function updateGroceryItemStatus(status, id) {
+    const response = await client 
+        .from('grocery-items')
+        .update({ 'status': status })
+        .match({ 'id': id })
+        .single();
+
+    return response.body;
+}
+
+export async function updateGroceryItemCount(count, id) {
+    const response = await client 
+        .from('grocery-items')
+        .update({ 'count': count })
+        .match({ 'id': id })
+        .single();
+
+    return response.body;
+}
+
+export async function deleteGroceryItem(id) {
+    const response = await client 
+        .from('grocery-items')
+        .delete()
+        .match({ id: id })
+        .single();
+
+    return response.body;
+}
+
+//pantry items
+export async function getAllPantryItems() {
+    const response = await client 
+        .from('pantry-items')
+        .select('*');
+
+    return response.body;
+}
+
+export async function getPantryItemByItemId(item_id) {
+    const response = await client 
+        .from('pantry-items')
+        .select('*')
+        .match({ 'item_id': item_id })
+        .single();
+
+    return response.body;
+}
+
+export async function getAllPantryItemsGreaterThanZero() {
+    const response = await client 
+        .from('pantry-items')
+        .select('*')
+        .gt('count', 0);
+
+    return response.body;
+}
+
+export async function createPantryItem(item) {
+    const response = await client
+        .from('pantry-items')
+        .insert(item);
+    
+    return response.body;
+}
+
+export async function updatePantryItemCount(count, id) {
+    const response = await client 
+        .from('pantry-items')
+        .update({ 'count': count })
+        .match({ 'id': id })
+        .single();
+
+    return response.body;
+}
+
