@@ -1,5 +1,5 @@
 import { renderShoppingOptions, renderGroceryItems, renderPantryItem } from '../render-utils.js';
-import { createGroceryItem, createShoppingItem, getAllActiveGroceryItems, getAllShoppingItems, getSingleShoppingItemByName, getAllCompletedGroceryItems, updateGroceryItemStatus, createPantryItem, getPantryItemByItemId, updatePantryItemCount, getAllPantryItemsGreaterThanZero } from '../fetch-utils.js';
+import { createGroceryItem, createShoppingItem, getAllActiveGroceryItems, getAllShoppingItems, getSingleShoppingItemByName, getAllCompletedGroceryItems, updateGroceryItemStatus, createPantryItem, getPantryItemByItemId, updatePantryItemCount, getAllPantryItemsGreaterThanZero, deleteGroceryItem } from '../fetch-utils.js';
 
 import { checkAuth, logout } from '../fetch-utils.js';
 
@@ -16,6 +16,7 @@ const groceryForm = document.getElementById('grocery-form');
 const groceryList = document.getElementById('grocery-list');
 const finishShoppingBtn = document.querySelector('.finishShoppingBtn');
 const pantryList = document.getElementById('pantry-list');
+const deleteAllBtn = document.getElementById('deleteAllBtn');
 
 
 window.addEventListener('load', () => {
@@ -137,3 +138,13 @@ export async function displayPantryItems() {
         pantryList.append(pantryItemEl);
     }
 }
+
+deleteAllBtn.addEventListener('click', async () => {
+    const groceryItems = await getAllActiveGroceryItems();
+
+    for (let item of groceryItems) {
+        await deleteGroceryItem(item.id);
+    }
+
+    displayGroceryItems();
+});
