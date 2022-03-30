@@ -87,22 +87,22 @@ export async function renderPantryItem(item) {
 
         e.path[1].childNodes[0].textContent = count;
 
-        updatePantryItemCount(count, itemId);
+        await updatePantryItemCount(count, itemId);
 
         if (count === 0) {
             await displayPantryItems();
         }
     });
 
-    expireButton.addEventListener('click', (e) => {
+    expireButton.addEventListener('click', async (e) => {
         const itemId = e.path[1].id;
         let count = 0;
 
         e.path[1].childNodes[0].textContent = count;
 
-        updatePantryItemCount(count, itemId);
+        await updatePantryItemCount(count, itemId);
 
-        displayPantryItems();
+        await displayPantryItems();
     });
 
     pantryInfoSpan.append(countText, useButton, expireButton);

@@ -1,6 +1,16 @@
 import { renderShoppingOptions, renderGroceryItems, renderPantryItem } from '../render-utils.js';
 import { createGroceryItem, createShoppingItem, getAllActiveGroceryItems, getAllShoppingItems, getSingleShoppingItemByName, getAllCompletedGroceryItems, updateGroceryItemStatus, createPantryItem, getPantryItemByItemId, updatePantryItemCount, getAllPantryItemsGreaterThanZero } from '../fetch-utils.js';
 
+import { checkAuth, logout } from '../fetch-utils.js';
+
+checkAuth();
+
+const logoutButton = document.getElementById('logout');
+
+logoutButton.addEventListener('click', () => {
+    logout();
+});
+
 const selectDataList = document.getElementById('grocery-item-list');
 const groceryForm = document.getElementById('grocery-form');
 const groceryList = document.getElementById('grocery-list');
@@ -109,12 +119,12 @@ finishShoppingBtn.addEventListener('click', async () => {
         } else {
             const pantryItem = generatePantryItem(item);
 
-            createPantryItem(pantryItem);
+            await createPantryItem(pantryItem);
         }
     }
 
-    displayGroceryItems();
-    displayPantryItems();
+    await displayGroceryItems();
+    await displayPantryItems();
 });
 
 export async function displayPantryItems() {
