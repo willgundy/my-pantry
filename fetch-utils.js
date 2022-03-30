@@ -132,14 +132,6 @@ export async function deleteGroceryItem(id) {
     return response.body;
 }
 
-export async function deleteAllGroceryItem() {
-    const response = await client 
-        .from('grocery-items')
-        .delete();
-
-    return response.body;
-}
-
 //pantry items
 export async function getAllPantryItems() {
     const response = await client 
