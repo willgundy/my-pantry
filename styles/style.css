@@ -131,3 +131,13 @@ ul {
     min-width: 80%;
     padding: 12px 8px 12px 40px;
 }
+
+.infoSpan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    padding-right: 20px;
+}

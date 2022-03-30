@@ -103,14 +103,11 @@ finishShoppingBtn.addEventListener('click', async () => {
 
         const existingPantryItem = await getPantryItemByItemId(item.item_id);
 
-        console.log(existingPantryItem);
-
         if (existingPantryItem) {
             const newCount = existingPantryItem.count + item.count;
             await updatePantryItemCount(newCount, existingPantryItem.id);
         } else {
             const pantryItem = generatePantryItem(item);
-            console.log(pantryItem);
 
             createPantryItem(pantryItem);
         }
@@ -120,7 +117,7 @@ finishShoppingBtn.addEventListener('click', async () => {
     displayPantryItems();
 });
 
-async function displayPantryItems() {
+export async function displayPantryItems() {
     pantryList.innerHTML = '';
     const pantryItems = await getAllPantryItemsGreaterThanZero();
 

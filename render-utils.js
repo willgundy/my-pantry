@@ -1,5 +1,5 @@
-import { deleteGroceryItem, getSingleShoppingItem, updateGroceryItemStatus } from './fetch-utils.js';
-import { displayGroceryItems } from './shopping-list/shopping-list.js';
+import { deleteGroceryItem, getSingleShoppingItem, updateGroceryItemStatus, updatePantryItemCount } from './fetch-utils.js';
+import { displayGroceryItems, displayPantryItems } from './shopping-list/shopping-list.js';
 
 export function renderShoppingOptions(item) {
     const groceryOption = document.createElement('option');
@@ -65,12 +65,11 @@ export async function renderPantryItem(item) {
 
     const shoppingItem = await getSingleShoppingItem(item.item_id);
 
-    console.log(shoppingItem);
-
     pantryItemEl.textContent = shoppingItem.item_name;
 
     const pantryInfoSpan = document.createElement('span');
-
+    pantryInfoSpan.classList.add('infoSpan');
+    pantryInfoSpan.id = item.id;
     
     const countText = document.createElement('p');
     const useButton = document.createElement('button');
@@ -79,6 +78,32 @@ export async function renderPantryItem(item) {
     countText.textContent = item.count;
     useButton.textContent = 'Use';
     expireButton.textContent = 'Expired';
+
+    useButton.addEventListener('click', async (e) => {
+        const itemId = e.path[1].id;
+        let count = Number(e.path[1].childNodes[0].textContent);
+
+        count--;
+
+        e.path[1].childNodes[0].textContent = count;
+
+        updatePantryItemCount(count, itemId);
+
+        if (count === 0) {
+            await displayPantryItems();
+        }
+    });
+
+    expireButton.addEventListener('click', (e) => {
+        const itemId = e.path[1].id;
+        let count = 0;
+
+        e.path[1].childNodes[0].textContent = count;
+
+        updatePantryItemCount(count, itemId);
+
+        displayPantryItems();
+    });
 
     pantryInfoSpan.append(countText, useButton, expireButton);
 
